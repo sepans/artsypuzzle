@@ -1,0 +1,41 @@
+.artwork-images__images {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.artwork-actions {
+	display: none;
+}
+.piece {
+	overflow: hidden;
+}
+
+.hints {
+	width: 100%;
+	height: 100%;
+	margin: 5px 0;
+}
+
+.extra {
+	z-index: 1000;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+.extra .piece {
+	/*border: 1px solid #ccc;*/
+	position: absolute;
+	border: 0px;
+	cursor: move;
+}
+
+.hint-piece {
+	position: absolute;
+}
+
+.puzzle-btn {
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+}
+
