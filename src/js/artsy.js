@@ -19,13 +19,13 @@ function dragstarted() {
 }
 
 function dragged(d) {
-	const stepX = pieceSize[0],
-		  stepY = pieceSize[1]
+        const stepX = pieceSize[0],
+                stepY = pieceSize[1]
 
-	d.x = Math.round(d3.event.x / stepX) * stepX
-    d.y = Math.round(d3.event.y / stepY) * stepY - 5
-    const trans = translate(d)
-    d3.select(this).style('transform', trans)
+         d.x = Math.round(d3.event.x / stepX) * stepX
+         d.y = Math.round(d3.event.y / stepY) * stepY - 5
+         const trans = translate(d)
+         d3.select(this).style('transform', trans)
 }
 
 function dragend() {
@@ -109,6 +109,5 @@ d3.select('body')
 		.classed('puzzle-btn', true)
 		.on('click', () => makePuzzle())
 
-//makePuzzle()
 
 						
