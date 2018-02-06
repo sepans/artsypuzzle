@@ -45,6 +45,7 @@ function dragend() {
   pieceInfo[elData.index].correct = true
 
   if(isSolved()) {
+    d3.select('.artwork-images').style('height', '65vh')
     alert('solved')
   }
   //debugger;
@@ -65,6 +66,8 @@ function isSolved() {
 }
 
 function makePuzzle() {
+  d3.select('.artwork-images').style('height', '100vh') //make room for extra pieces
+
   imageContainer.selectAll("*").remove();
 
 
@@ -114,6 +117,7 @@ function makePuzzle() {
       .on("drag", dragged)
       .on("end", dragend);
 
+  const hintsPerRow = 8
   const extraPieces = extraPieceContainer
     .selectAll(".extra")
     .data(d3.shuffle(pieceInfo.filter(d => !d.hint)))
@@ -123,7 +127,7 @@ function makePuzzle() {
       .style("display", "inline-block")
       .call(setupPiece)
       .style("transform", (d, i) => {
-        return `translate(${(i % 6) * pieceSize[0]}px, ${Math.floor(i / 6) *
+        return `translate(${(i % hintsPerRow) * pieceSize[0]}px, ${Math.floor(i / hintsPerRow) *
           pieceSize[1]}px`;
       })
       .call(drag);
