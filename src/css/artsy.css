@@ -72,7 +72,7 @@
 }
 
 .puzzle-timer.solved:before {
-	content: 'Solved in: '
+	content: '🎉 Solved in: '
 }
 
 .timer-minute:after {

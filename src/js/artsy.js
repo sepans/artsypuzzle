@@ -21,27 +21,36 @@ function dragstarted() {
     .style("border", "0px");
 }
 
-function dragged(d) {
+function roundSnap(coord) {
   const stepX = pieceSize[0],
     stepY = pieceSize[1];
+  return {
+    x: Math.round(coord.x / stepX) * stepX + positionDiff[0],
+    y: Math.round(coord.y / stepY) * stepY + positionDiff[1]
+  }
+}
 
-  d.x = Math.round(d3.event.x / stepX) * stepX + positionDiff[0];
-  d.y = Math.round(d3.event.y / stepY) * stepY + positionDiff[1];
+function dragged(d) {
+  const snap = roundSnap(d3.event)
+  d.x = snap.x
+  d.y = snap.y
   const trans = translate(d);
   d3.select(this).style("transform", trans);
 }
 
-function dragend() {
-  console.log(this.getBoundingClientRect(), hintPos, pieceSize);
+function dragend(d) {
+  console.log('---')
   const dropRect = this.getBoundingClientRect();
-  const dropPos = [
-    Math.floor(dropRect.y / pieceSize[1]),
-    Math.floor(dropRect.x / pieceSize[0]) - 2
-  ]
+  console.log("rel", dropRect, hintPos);
+  const dropPos = {
+    x: Math.round((dropRect.x - hintPos.x) / pieceSize[0]),
+    y: Math.round((dropRect.y - hintPos.y) / pieceSize[1]),
+  }
+  console.log(roundSnap(dropPos))
   const el = d3.select(this)
   const elData = el.data()[0]
   const correctPos = elData.pos
-  const correct = correctPos[0] === dropPos[0] && correctPos[1] === dropPos[1]
+  const correct = correctPos.x === dropPos.x && correctPos.y === dropPos.y
   pieceInfo[elData.index].correct = correct
   console.log(dropPos, correctPos, correct)
 
@@ -82,9 +91,10 @@ function makePuzzle() {
     return {
       index: i,
       hint: Math.random() < hintRatio,
-      pos: [Math.floor(i / puzzlePieces[0]), i % puzzlePieces[0]]
+      pos: {x: i % puzzlePieces[0], y: Math.floor(i / puzzlePieces[0])}
     }
   })
+  console.log(pieceInfo)
     
   d3.select('.artwork-images').style('height', '100vh') //make room for extra pieces
 
